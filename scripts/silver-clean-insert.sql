@@ -1,3 +1,6 @@
+PRINT '>> Truncating table: silver.crm_cust_info';
+TRUNCATE TABLE silver.crm_cust_info;
+PRINT '>> Inserting into table: silver.crm_cust_info';
 INSERT INTO silver.crm_cust_info (
 	cst_id,
 	cst_key,
@@ -31,6 +34,9 @@ FROM (
 -- =======================================================
 
 
+PRINT '>> Truncating table: silver.crm_prd_info';
+TRUNCATE TABLE silver.crm_prd_info;
+PRINT '>> Inserting into table: silver.crm_prd_info';
 INSERT INTO silver.crm_prd_info (
 	prd_id, 
 	cat_id, 
@@ -63,6 +69,9 @@ FROM bronze.crm_prd_info
 -- =======================================================
 
 
+PRINT '>> Truncating table: silver.crm_sales_details';
+TRUNCATE TABLE silver.crm_sales_details;
+PRINT '>> Inserting into table: silver.crm_sales_details';
 INSERT INTO silver.crm_sales_details (
 	sls_ord_num,
 	sls_prd_key,
@@ -103,6 +112,9 @@ FROM bronze.crm_sales_details
 -- ========================================================
 
 
+PRINT '>> Truncating table: silver.erp_cust_az12';
+TRUNCATE TABLE silver.erp_cust_az12;
+PRINT '>> Inserting into table: silver.erp_cust_az12';
 INSERT INTO silver.erp_cust_az12 (
 	cid,
 	bdate, 
@@ -126,6 +138,9 @@ FROM bronze.erp_cust_az12;
 -- =======================================================
 
 
+PRINT '>> Truncating table: silver.erp_loc_a101';
+TRUNCATE TABLE silver.erp_loc_a101;
+PRINT '>> Inserting into table: silver.erp_loc_a101';
 INSERT INTO silver.erp_loc_a101 (cid, cntry)
 
 SELECT 
@@ -141,6 +156,9 @@ FROM bronze.erp_loc_a101 -- Data Standardization
 -- ========================================================
 
 
+PRINT '>> Truncating table: silver.erp_px_cat_g1v';
+TRUNCATE TABLE silver.erp_px_cat_g1v;
+PRINT '>> Inserting into table: silver.erp_px_cat_g1v';
 INSERT INTO silver.erp_px_cat_g1v2(id, cat, subcat, maintenance)
 
 SELECT id, cat, subcat, maintenance FROM bronze.erp_px_cat_g1v2; -- Alrady Clean Data
