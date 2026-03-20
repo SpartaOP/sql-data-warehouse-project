@@ -98,3 +98,31 @@ SELECT
 		 ELSE sls_price
 	END AS sls_price
 FROM bronze.crm_sales_details
+
+
+-- ========================================================
+
+
+INSERT INTO silver.erp_cust_az12 (
+	cid,
+	bdate, 
+	gen
+) -- Inserting clean data into silver schema table
+
+SELECT
+	CASE WHEN cid LIKE 'NAS%' THEN SUBSTRING(cid, 4, LEN(cid) - 3) -- Eliminating 'NAS' prefix from cid if it exists
+		 ELSE cid
+	END AS cid, 
+	CASE WHEN bdate > GETDATE() THEN NULL -- Eliminating future dates in bdate column by replacing them with NULL
+		 ELSE bdate
+	END AS bdate,
+	CASE WHEN UPPER(TRIM(gen)) IN ('MALE', 'M') THEN 'Male'
+		 WHEN UPPER(TRIM(gen)) IN ('FEMALE', 'F') THEN 'Female'
+		 ELSE 'na' -- Data Standardization
+	END AS gen
+FROM bronze.erp_cust_az12;
+
+
+-- =======================================================
+
+
