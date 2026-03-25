@@ -1,3 +1,17 @@
+/*
+	This script creates views for the gold layer, using star schema.
+	These views can be queried for reporting and analysis.
+*/
+
+
+-- ===============================================
+-- Create fact: gold.fact_sales
+-- ===============================================
+
+
+IF OBJECT_ID('gold.fact_sales', 'V') IS NOT NULL
+	DROP VIEW gold.fact_sales
+GO
 CREATE VIEW gold.fact_sales AS
 SELECT 
 	sd.sls_ord_num AS order_number,
@@ -16,9 +30,14 @@ LEFT JOIN gold.dim_customers cu
 ON sd.sls_cust_id = cu.customer_id;
 
 
+-- ===============================================
+-- Create dim: gold.dim_customers
+-- ===============================================
 
 
-
+IF OBJECT_ID('gold.dim_customers', 'V') IS NOT NULL
+	DROP VIEW gold.dim_customers
+GO
 CREATE VIEW gold.dim_customers AS
 SELECT 
 	ROW_NUMBER() OVER (ORDER BY ci.cst_id) AS customer_key,
@@ -40,10 +59,14 @@ LEFT JOIN silver.erp_loc_a101 la
 ON ci.cst_key = la.cid;
 
 
+-- ===============================================
+-- Create dim: gold.fact_sales
+-- ===============================================
 
 
-
-
+IF OBJECT_ID('gold.dim_products', 'V') IS NOT NULL
+	DROP VIEW gold.dim_products
+GO
 CREATE VIEW gold.dim_products AS
 SELECT 
 	ROW_NUMBER() OVER (ORDER BY pn.prd_start_dt,  pn.prd_id) AS product_key,
